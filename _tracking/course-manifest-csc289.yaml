@@ -1,0 +1,499 @@
+# course-manifest.yaml
+# CSC 289: Programming Capstone
+# Course Development Tracking System v0.1
+#
+# This manifest tracks teaching materials for CSC 289.
+# Team progress is tracked via GitHub activity, not this manifest.
+#
+# Note: CSC 289 is a capstone course with team-based projects.
+# Deliverables are primarily rubrics, guides, and templates rather than
+# traditional readings and labs.
+
+manifest_version: "0.1"
+last_updated: "2024-12-26T00:00:00Z"
+
+# ============================================================================
+# COURSE METADATA
+# ============================================================================
+course:
+  id: "CSC-289"
+  name: "Programming Capstone"
+  credits: 3
+  
+  description: |
+    This capstone course integrates software development skills in a team-based 
+    project environment. Students work in cross-functional teams to design, build, 
+    and deploy a production-quality web application. Topics include agile methodology, 
+    team collaboration, code review, deployment, and portfolio development. Upon 
+    completion, students will have demonstrated professional-level software development 
+    competency through a completed product and technical presentation.
+  
+  prerequisites:
+    - "CTS-285"  # Or ORANGE clearance equivalent
+  
+  corequisites:
+    - "GRD-Capstone"  # Design collaboration (optional but encouraged)
+    - "DBA-289"       # Database specialists join dev teams
+  
+  repository_pattern: "capstone-{platform}-{team}"
+  claude_project_id: ""
+  
+  # Clearance range for this course
+  clearance:
+    entry: "ORANGE"
+    exit: "GREEN"
+    milestones:
+      - clearance: "YELLOW"
+        target_week: 10
+      - clearance: "GREEN"
+        target_week: 14
+  
+  outcomes:
+    - "Apply agile/Scrum methodology in a team software development context"
+    - "Collaborate effectively with cross-functional team members"
+    - "Design and implement a multi-tier web application with database backend"
+    - "Conduct meaningful code reviews and respond to peer feedback"
+    - "Deploy and maintain a production application"
+    - "Present technical work to stakeholders through pitch and demo formats"
+    - "Document architecture decisions and technical specifications"
+    - "Demonstrate YELLOW and GREEN clearance competencies via exit tickets"
+
+  # Key calendar milestones
+  milestones:
+    - name: "Pitch Presentations"
+      week: 4
+      description: "Teams present project vision and initial architecture"
+    - name: "Design Handoff"
+      week: 8
+      description: "Design assets integrated, UI implementation begins"
+    - name: "YELLOW Exit Tickets"
+      week: 10
+      description: "Individual competency demonstration"
+    - name: "GREEN Exit Tickets"
+      week: 13
+      description: "Leadership and documentation competency"
+    - name: "Demo Day"
+      week: 15
+      description: "Final product demonstration to stakeholders"
+
+# ============================================================================
+# PLATFORM DEFINITIONS
+# ============================================================================
+# Each team works on one of four platforms. Platform briefs are provided
+# by instructor; teams build white-label applications on the platform.
+
+platforms:
+  - id: "task-management"
+    name: "Task Management Platform"
+    algocratic_variant: "TeamFlow™"
+    technical_focus: "Multi-tenant workspaces, RBAC, hierarchies"
+    db_focus: "Relational hierarchies, access control"
+    
+  - id: "ecommerce"
+    name: "E-Commerce Platform"
+    algocratic_variant: "ComplianceCart™"
+    technical_focus: "Transaction integrity, state machines, inventory"
+    db_focus: "Order processing, product catalogs"
+    
+  - id: "recommendation"
+    name: "Recommendation Engine Platform"
+    algocratic_variant: "PreferenceOptimizer™"
+    technical_focus: "Similarity algorithms, preference modeling"
+    db_focus: "Graph relationships, rating aggregation"
+    
+  - id: "health-tracker"
+    name: "Health & Wellness Tracker Platform"
+    algocratic_variant: "BiometricCompliance™"
+    technical_focus: "Time-series data, privacy requirements"
+    db_focus: "Temporal queries, data retention policies"
+
+# ============================================================================
+# MODULE DEFINITIONS
+# ============================================================================
+modules:
+  # --------------------------------------------------------------------------
+  - id: "M01"
+    name: "Level Setting & Team Formation"
+    weeks: [1, 2]
+    sprint: "Sprint 0"
+    clearance: "ORANGE"
+    description: "Team formation, platform assignment, environment setup, DB catch-up"
+    
+    deliverables:
+      # Platform briefs (one per platform, instructor-provided)
+      - type: "platform_brief"
+        name: "Task Management Platform Brief"
+        file: "platforms/task-management/PLATFORM_BRIEF.md"
+        status: "planned"
+        notes: "Extract from 26SP_Platform_Project_Matrix.md"
+        
+      - type: "platform_brief"
+        name: "E-Commerce Platform Brief"
+        file: "platforms/ecommerce/PLATFORM_BRIEF.md"
+        status: "planned"
+        notes: "Extract from 26SP_Platform_Project_Matrix.md"
+        
+      - type: "platform_brief"
+        name: "Recommendation Engine Platform Brief"
+        file: "platforms/recommendation/PLATFORM_BRIEF.md"
+        status: "planned"
+        notes: "Extract from 26SP_Platform_Project_Matrix.md"
+        
+      - type: "platform_brief"
+        name: "Health Tracker Platform Brief"
+        file: "platforms/health-tracker/PLATFORM_BRIEF.md"
+        status: "planned"
+        notes: "Extract from 26SP_Platform_Project_Matrix.md"
+      
+      # Student support documents
+      - type: "guide"
+        name: "Day 1 Essentials"
+        file: "docs/DAY_1_ESSENTIALS.md"
+        status: "complete"
+        notes: "5-minute survival brief, team contract draft"
+        
+      - type: "guide"
+        name: "Capstone Survival Guide"
+        file: "docs/UNDERGROUND_CAPSTONE_SURVIVAL_GUIDE.md"
+        status: "complete"
+        notes: "43KB comprehensive GameFAQs-style guide"
+        
+      - type: "template"
+        name: "Team Contract Template"
+        file: "templates/TEAM_CONTRACT.md"
+        status: "draft"
+        notes: "Extract and formalize from Day 1 Essentials"
+        living_document: true
+        
+      - type: "guide"
+        name: "DB Specialist Catch-up Guide"
+        file: "docs/DB_CATCHUP_GUIDE.md"
+        status: "planned"
+        notes: "Git workflow, collaboration patterns for RED→ORANGE"
+        
+      - type: "guide"
+        name: "Communication Channel Setup"
+        file: "docs/COMMUNICATION_SETUP.md"
+        status: "planned"
+        notes: "Slack/Discord/Teams configuration guidance"
+
+  # --------------------------------------------------------------------------
+  - id: "M02"
+    name: "Sprint 1 & Pitch Presentations"
+    weeks: [3, 4]
+    sprint: "Sprint 1"
+    clearance: "ORANGE"
+    description: "First sprint, MVP planning, pitch presentations Week 4"
+    
+    deliverables:
+      - type: "guide"
+        name: "Sprint Ceremony Guide"
+        file: "docs/SPRINT_CEREMONY_GUIDE.md"
+        status: "planned"
+        notes: "Planning, Standup, Review, Retrospective procedures"
+        
+      - type: "rubric"
+        name: "Pitch Presentation Rubric"
+        file: "rubrics/PITCH_RUBRIC.md"
+        status: "planned"
+        notes: "HIGH PRIORITY - needed before Week 4"
+        
+      - type: "guide"
+        name: "Pitch Presentation Guidelines"
+        file: "docs/PITCH_GUIDELINES.md"
+        status: "planned"
+        notes: "Structure, timing, expectations for pitch"
+        
+      - type: "checklist"
+        name: "Sprint 1 Deliverables Checklist"
+        file: "checklists/SPRINT_1_CHECKLIST.md"
+        status: "planned"
+        notes: "What teams should have by end of Sprint 1"
+        
+      - type: "guide"
+        name: "First PR Expectations"
+        file: "docs/FIRST_PR_GUIDE.md"
+        status: "planned"
+        notes: "Code review standards, PR template"
+
+  # --------------------------------------------------------------------------
+  - id: "M03"
+    name: "Sprint 2: Core Features"
+    weeks: [5, 6]
+    sprint: "Sprint 2"
+    clearance: "ORANGE→YELLOW"
+    description: "Core feature development, establishing velocity"
+    
+    deliverables:
+      - type: "rubric"
+        name: "Code Review Rubric"
+        file: "rubrics/CODE_REVIEW_RUBRIC.md"
+        status: "planned"
+        notes: "Standards for peer code review"
+        
+      - type: "template"
+        name: "Architecture Decision Record Template"
+        file: "templates/ADR_TEMPLATE.md"
+        status: "planned"
+        notes: "For documenting technical decisions"
+        living_document: true
+        
+      - type: "checklist"
+        name: "Sprint 2 Expectations"
+        file: "checklists/SPRINT_2_CHECKLIST.md"
+        status: "planned"
+
+  # --------------------------------------------------------------------------
+  - id: "M04"
+    name: "Sprint 3 & Design Handoff"
+    weeks: [7, 8]
+    sprint: "Sprint 3"
+    clearance: "YELLOW"
+    description: "Design asset integration, UI implementation begins"
+    
+    deliverables:
+      - type: "checklist"
+        name: "Design Handoff Checklist"
+        file: "checklists/DESIGN_HANDOFF_CHECKLIST.md"
+        status: "planned"
+        notes: "What dev teams need from design, what design needs from dev"
+        
+      - type: "template"
+        name: "Design Brief Template"
+        file: "templates/DESIGN_BRIEF_TEMPLATE.md"
+        status: "planned"
+        notes: "Living document for design collaboration"
+        living_document: true
+        
+      - type: "guide"
+        name: "Wireframe-to-Implementation Guide"
+        file: "docs/WIREFRAME_IMPLEMENTATION.md"
+        status: "planned"
+        notes: "How to translate design assets to code"
+        
+      - type: "reference"
+        name: "Cross-Discipline Protocol"
+        file: "docs/26SP_Cross_Discipline_Protocol.md"
+        status: "complete"
+        notes: "Dev × Design integration cadence"
+
+  # --------------------------------------------------------------------------
+  - id: "M05"
+    name: "Sprint 4 & YELLOW Exit Tickets"
+    weeks: [9, 10]
+    sprint: "Sprint 4"
+    clearance: "YELLOW"
+    description: "Testing focus, YELLOW clearance demonstration"
+    
+    deliverables:
+      - type: "exit_ticket"
+        name: "YELLOW Exit Ticket Specification"
+        file: "exit-tickets/YELLOW_EXIT_TICKET.md"
+        status: "planned"
+        notes: "HIGH PRIORITY - defines YELLOW competency demonstration"
+        
+      - type: "checklist"
+        name: "YELLOW Competency Checklist"
+        file: "checklists/YELLOW_COMPETENCY.md"
+        status: "planned"
+        notes: "Self-assessment before exit ticket"
+        
+      - type: "guide"
+        name: "Testing Expectations Guide"
+        file: "docs/TESTING_GUIDE.md"
+        status: "planned"
+        notes: "Unit tests, integration tests, manual testing"
+        
+      - type: "checklist"
+        name: "Sprint 4 Checklist"
+        file: "checklists/SPRINT_4_CHECKLIST.md"
+        status: "planned"
+
+  # --------------------------------------------------------------------------
+  - id: "M06"
+    name: "Sprint 5 & GREEN Exit Tickets"
+    weeks: [11, 12]
+    sprint: "Sprint 5"
+    clearance: "YELLOW→GREEN"
+    description: "Documentation focus, GREEN clearance demonstration begins"
+    
+    deliverables:
+      - type: "exit_ticket"
+        name: "GREEN Exit Ticket Specification"
+        file: "exit-tickets/GREEN_EXIT_TICKET.md"
+        status: "planned"
+        notes: "HIGH PRIORITY - defines GREEN competency demonstration"
+        
+      - type: "checklist"
+        name: "GREEN Competency Checklist"
+        file: "checklists/GREEN_COMPETENCY.md"
+        status: "planned"
+        notes: "Leadership, documentation, mentoring evidence"
+        
+      - type: "guide"
+        name: "Documentation Standards Guide"
+        file: "docs/DOCUMENTATION_STANDARDS.md"
+        status: "planned"
+        notes: "README, API docs, user guides"
+        
+      - type: "template"
+        name: "Deployment Runbook Template"
+        file: "templates/DEPLOYMENT_RUNBOOK.md"
+        status: "planned"
+        living_document: true
+
+  # --------------------------------------------------------------------------
+  - id: "M07"
+    name: "Sprint 6: Final Integration"
+    weeks: [13, 14]
+    sprint: "Sprint 6"
+    clearance: "GREEN"
+    description: "Feature freeze, bug fixes, final polish"
+    
+    deliverables:
+      - type: "checklist"
+        name: "Final Integration Checklist"
+        file: "checklists/FINAL_INTEGRATION.md"
+        status: "planned"
+        notes: "Pre-demo verification"
+        
+      - type: "guide"
+        name: "Feature Freeze Protocol"
+        file: "docs/FEATURE_FREEZE.md"
+        status: "planned"
+        notes: "What changes are allowed after freeze"
+        
+      - type: "guide"
+        name: "Bug Triage Process"
+        file: "docs/BUG_TRIAGE.md"
+        status: "planned"
+        notes: "Priority classification, assignment"
+        
+      - type: "guide"
+        name: "Deployment Guide"
+        file: "docs/DEPLOYMENT_GUIDE.md"
+        status: "planned"
+        notes: "Platform-agnostic deployment guidance"
+
+  # --------------------------------------------------------------------------
+  - id: "M08"
+    name: "Demo & Portfolio"
+    weeks: [15, 16]
+    sprint: "Sprint 7"
+    clearance: "GREEN"
+    description: "Final demo Week 15, portfolio wrap-up Week 16"
+    
+    deliverables:
+      - type: "rubric"
+        name: "Demo Presentation Rubric"
+        file: "rubrics/DEMO_RUBRIC.md"
+        status: "planned"
+        notes: "HIGH PRIORITY - grading criteria for final demo"
+        
+      - type: "guide"
+        name: "Demo Presentation Guidelines"
+        file: "docs/DEMO_GUIDELINES.md"
+        status: "planned"
+        notes: "Structure, timing, what to show"
+        
+      - type: "rubric"
+        name: "Peer Evaluation Rubric"
+        file: "rubrics/PEER_EVALUATION_RUBRIC.md"
+        status: "planned"
+        notes: "Team member evaluation criteria"
+        
+      - type: "template"
+        name: "Portfolio Page Template"
+        file: "templates/PORTFOLIO_TEMPLATE.md"
+        status: "planned"
+        notes: "Individual portfolio documentation"
+        living_document: true
+        
+      - type: "guide"
+        name: "Course Retrospective Guide"
+        file: "docs/COURSE_RETROSPECTIVE.md"
+        status: "planned"
+        notes: "Final reflection exercise"
+
+# ============================================================================
+# PROGRESS TRACKING
+# ============================================================================
+progress:
+  total_deliverables: 45
+  complete: 4
+  review: 0
+  draft: 1
+  planned: 40
+  percentage: 9
+
+# ============================================================================
+# SUPPLEMENTARY RESOURCES (Course-wide, not module-specific)
+# ============================================================================
+resources:
+  # Planning documents
+  - name: "Platform Project Matrix"
+    file: "docs/26SP_Platform_Project_Matrix.md"
+    status: "complete"
+    notes: "Source for all platform briefs"
+    
+  - name: "Database Capstone Integration"
+    file: "docs/26SP_Database_Capstone_Integration.md"
+    status: "complete"
+    notes: "DB specialist role definition"
+    
+  - name: "Uncertainty Matrix"
+    file: "docs/26SP_Uncertainty_Matrix.md"
+    status: "complete"
+    notes: "Open questions and decisions"
+  
+  # Shared AlgoCratic resources
+  - name: "AlgoCratic Style Guide"
+    file: "docs/AlgoCratic_Style_Guide.md"
+    status: "complete"
+    
+  - name: "Training Module Manifest"
+    file: "docs/TRAINING_MODULE_MANIFEST.md"
+    status: "complete"
+    notes: "Clearance competency definitions"
+    
+  - name: "FOBSS Field Guide"
+    file: "docs/FOBSS_Field_Guide.md"
+    status: "complete"
+    notes: "Student resistance intervention"
+
+# ============================================================================
+# LIVING DOCUMENTS REGISTRY
+# ============================================================================
+# These templates are used by teams throughout the semester.
+# Status tracks template readiness, not per-team completion.
+
+living_documents:
+  - name: "Team Contract"
+    template: "templates/TEAM_CONTRACT.md"
+    created_module: "M01"
+    updated_through: "ongoing"
+    owner: "team"
+    
+  - name: "Architecture Decision Record"
+    template: "templates/ADR_TEMPLATE.md"
+    created_module: "M03"
+    updated_through: "M07"
+    owner: "team"
+    
+  - name: "Design Brief"
+    template: "templates/DESIGN_BRIEF_TEMPLATE.md"
+    created_module: "M04"
+    updated_through: "M06"
+    owner: "team + design"
+    
+  - name: "Deployment Runbook"
+    template: "templates/DEPLOYMENT_RUNBOOK.md"
+    created_module: "M06"
+    updated_through: "M08"
+    owner: "team"
+    
+  - name: "Portfolio Page"
+    template: "templates/PORTFOLIO_TEMPLATE.md"
+    created_module: "M07"
+    updated_through: "M08"
+    owner: "individual"

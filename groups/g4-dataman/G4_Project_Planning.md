@@ -54,43 +54,26 @@ Your capstone job is to take those same core mechanics and build them as a
 **full-stack web application** — with user accounts, a database, and a dashboard
 that shows progress over time.
 
-### Detailed Product Briefs
+### Your Technical Reference
 
-Two sets of detailed briefs have been prepared for you. They describe the **same
-underlying engine** aimed at two different markets:
+The companion document `DataMan_Brief.md` is your technical reference for
+everything about the product — how each game mode works in detail, what the
+database tables look like (with example data), how the adaptive difficulty
+algorithm works, and what Flask routes you need to build.
 
-| Document | Target Market | Voice |
-|----------|--------------|-------|
-| `CogniCalibrate_base.md` + `CogniCalibrate_technical.md` | Corporate / workplace wellness | Professional, a bit satirical |
-| `DataBuddy_base.md` + `DataBuddy_technical.md` | K-12 students and teachers | Friendly, encouraging, kid-safe |
-
-**Read both sets.** These briefs contain your personas, your user stories, your
-database schema, and your API design. They are the most important reference
-documents you have.
-
-For your MVP, the core loop is the same regardless of market direction:
-
-```
-User logs in → Picks a game mode → Solves problems → Sees their score → Comes back tomorrow
-```
-
-The differences between CogniCalibrate and DataBuddy are *product* differences
-(who it's for, what it looks like, what language it uses), not *engine* differences.
-For three sprints, you're building the engine. The product flavor is your choice —
-pick whichever direction your team finds more interesting, or invent a third option.
-The grading criteria are about the code, the process, and the demo — not which
-market you chose.
+**Read it.** Then keep it open while you're coding. It's designed as a reference
+you come back to, not a one-time read.
 
 ### The Four Game Modes
 
 DataMan has four solo game modes. These are the ones you're building.
 
-| Original (1977) | CogniCalibrate Name | DataBuddy Name | What It Does |
-|-----------------|---------------------|----------------|-------------|
-| Answer Checker | Quick Calibration | Check It! | Show an equation with an answer. Is it right or wrong? |
-| Number Guesser | Neural Narrowing | Mystery Number | Guess the secret number. Get higher/lower hints. |
-| Electro Flash | Reflex Calibration | Speed Round | Rapid-fire problems against a countdown timer. |
-| Missing Number | Pattern Extraction | Fill It In | An equation has a blank. Fill in the missing piece. |
+| Mode | Original Name (1977) | What It Does |
+|------|---------------------|-------------|
+| Answer Checker | Answer Checker | Show an equation with an answer. Is it right or wrong? |
+| Number Guesser | Number Guesser | Guess the secret number. Get higher/lower hints. |
+| Speed Round | Electro Flash | Rapid-fire problems against a countdown timer. |
+| Fill It In | Missing Number | An equation has a blank. Fill in the missing piece. |
 
 The original Dataman also had multiplayer-style games (Wipe Out and Force Out).
 These are not part of your MVP. Multiplayer requires real-time communication
@@ -394,10 +377,8 @@ deliverable.
 Here is your checklist for the first few days. Do these in order.
 
 ```
-[ ] Read CogniCalibrate_base.md (the creative brief)
-[ ] Read CogniCalibrate_technical.md (the technical brief)
-[ ] Skim DataBuddy_base.md + DataBuddy_technical.md (compare)
-[ ] As a team: decide your market direction (corporate, kids, or your own spin)
+[ ] Read DataMan_Brief.md (the technical reference — modes, database, difficulty)
+[ ] Read this document all the way through (G4_Project_Planning.md)
 [ ] Create your GitHub Organization and invite all team members + instructor
 [ ] Create the repository with a README and branch protection on main
 [ ] Create your GitHub Project Board with the five columns

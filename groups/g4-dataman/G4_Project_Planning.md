@@ -54,15 +54,14 @@ Your capstone job is to take those same core mechanics and build them as a
 **full-stack web application** — with user accounts, a database, and a dashboard
 that shows progress over time.
 
-### Your Technical Reference
+### Your Reference Documents
 
-The companion document `DataMan_Brief.md` is your technical reference for
-everything about the product — how each game mode works in detail, what the
-database tables look like (with example data), how the adaptive difficulty
-algorithm works, and what Flask routes you need to build.
+Two companion documents cover everything about the product itself:
 
-**Read it.** Then keep it open while you're coding. It's designed as a reference
-you come back to, not a one-time read.
+- `DataMan_Product_Brief.md` — What DataMan is, who it's for, what each mode
+  feels like to play. No code. Read this first.
+- `DataMan_Technical.md` — How to build it: database schema, adaptive
+  difficulty algorithm, Flask routes, file structure. Keep this open while coding.
 
 ### The Four Game Modes
 
@@ -377,7 +376,8 @@ deliverable.
 Here is your checklist for the first few days. Do these in order.
 
 ```
-[ ] Read DataMan_Brief.md (the technical reference — modes, database, difficulty)
+[ ] Read DataMan_Product_Brief.md (what you're building and who it's for)
+[ ] Read DataMan_Technical.md (database, routes, adaptive difficulty)
 [ ] Read this document all the way through (G4_Project_Planning.md)
 [ ] Create your GitHub Organization and invite all team members + instructor
 [ ] Create the repository with a README and branch protection on main

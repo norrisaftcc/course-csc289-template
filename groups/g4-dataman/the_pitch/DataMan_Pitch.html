@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataMan — Pitch Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a10;
+  --bg-card: #12121e;
+  --bg-elevated: #1a1a2e;
+  --green: #00ff41;
+  --green-dim: #00cc33;
+  --green-glow: #00ff4122;
+  --amber: #F1A512;
+  --amber-dim: #c08410;
+  --amber-glow: #F1A51222;
+  --orange: #DD4111;
+  --red: #8B2635;
+  --cyan: #22d3ee;
+  --text: #b0b0b0;
+  --text-dim: #666;
+  --white: #e0e0e0;
+  --font: 'IBM Plex Mono', 'Courier New', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 16px; }
+
+body::after { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px); pointer-events: none; z-index: 1000; }
+body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(0,255,65,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,65,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
+
+.presentation { position: relative; width: 100%; height: 100%; z-index: 1; }
+.slide { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 5vh 6vw; opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; pointer-events: none; overflow-y: auto; }
+.slide.active { opacity: 1; transform: translateY(0); pointer-events: all; }
+.slide-inner { max-width: 920px; width: 100%; }
+
+.title-huge { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; color: var(--green); text-shadow: 0 0 20px var(--green-glow); line-height: 1.1; margin-bottom: 0.3em; }
+.title-section { font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 700; color: var(--amber); text-shadow: 0 0 15px var(--amber-glow); line-height: 1.2; margin-bottom: 0.5em; }
+.title-sub { font-size: clamp(1rem, 2vw, 1.4rem); font-weight: 600; color: var(--green); margin-bottom: 0.4em; }
+.label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-dim); margin-bottom: 1.2em; }
+.body { font-size: 0.95rem; line-height: 1.7; color: var(--text); max-width: 700px; }
+.body + .body { margin-top: 0.8em; }
+.g { color: var(--green); } .a { color: var(--amber); } .o { color: var(--orange); } .w { color: var(--white); font-weight: 600; } .c { color: var(--cyan); } .dim { color: var(--text-dim); }
+
+.ascii { background: var(--bg-card); border: 1px solid #ffffff0a; border-left: 3px solid var(--green-dim); padding: 1.2em 1.5em; margin: 1.2em 0; font-size: clamp(0.55rem, 1.1vw, 0.8rem); line-height: 1.5; white-space: pre; overflow-x: auto; border-radius: 4px; }
+.ascii.amber { border-left-color: var(--amber); }
+.ascii.orange { border-left-color: var(--orange); }
+.ascii.cyan { border-left-color: var(--cyan); }
+
+.persona-card { background: var(--bg-card); border: 1px solid #ffffff0a; border-radius: 8px; padding: 1.4em 1.6em; margin: 1em 0; position: relative; overflow: hidden; }
+.persona-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+.persona-card.green::before { background: var(--green); }
+.persona-card.amber::before { background: var(--amber); }
+.persona-name { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.1em; }
+.persona-context { font-size: 0.75rem; color: var(--green-dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.8em; }
+.persona-card.amber .persona-context { color: var(--amber-dim); }
+.persona-quote { font-size: 0.88rem; color: var(--text); line-height: 1.6; font-style: italic; border-left: 2px solid var(--amber); padding-left: 1em; margin: 0.6em 0; }
+.persona-pain { font-size: 0.82rem; color: var(--text); line-height: 1.5; margin-top: 0.6em; }
+
+.feature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; margin: 1em 0; }
+.feature-card { background: var(--bg-card); border: 1px solid #ffffff0a; border-radius: 6px; padding: 1em 1.3em; }
+.feature-card:hover { border-color: var(--green-dim); }
+.feature-label { font-size: 0.65rem; color: var(--green-dim); letter-spacing: 0.15em; text-transform: uppercase; }
+.feature-name { font-size: 0.95rem; font-weight: 700; color: var(--amber); margin: 0.2em 0 0.3em; }
+.feature-desc { font-size: 0.8rem; color: var(--text); line-height: 1.5; }
+
+.callout { background: var(--bg-elevated); border: 1px solid var(--green-dim); border-radius: 6px; padding: 1em 1.4em; margin: 1.2em 0; font-size: 0.85rem; line-height: 1.6; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start; }
+@media (max-width: 768px) { .two-col, .feature-row { grid-template-columns: 1fr; } }
+
+.bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; height: 50px; background: linear-gradient(180deg, transparent, var(--bg) 40%); display: flex; align-items: center; justify-content: center; gap: 1.5em; z-index: 100; padding-bottom: 6px; }
+.nav-btn { font-family: var(--font); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; background: var(--bg-card); color: var(--text); border: 1px solid #ffffff15; padding: 0.4em 1.2em; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+.nav-btn:hover { background: var(--bg-elevated); color: var(--green); border-color: var(--green-dim); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.slide-counter { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.15em; min-width: 4em; text-align: center; }
+.progress-track { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: var(--bg-card); z-index: 100; }
+.progress-fill { height: 100%; background: var(--green); transition: width 0.4s ease; }
+.blink::after { content: '█'; animation: blink 1s step-end infinite; color: var(--green); font-weight: 300; }
+@keyframes blink { 50% { opacity: 0; } }
+.slide.active .s1 { animation: fadeUp 0.4s 0.1s ease both; }
+.slide.active .s2 { animation: fadeUp 0.4s 0.2s ease both; }
+.slide.active .s3 { animation: fadeUp 0.4s 0.35s ease both; }
+.slide.active .s4 { animation: fadeUp 0.4s 0.5s ease both; }
+.slide.active .s5 { animation: fadeUp 0.4s 0.65s ease both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+.slide::-webkit-scrollbar { width: 3px; } .slide::-webkit-scrollbar-track { background: transparent; } .slide::-webkit-scrollbar-thumb { background: var(--green-dim); border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="progress-track"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+
+<div class="presentation" id="presentation">
+
+<!-- ═══ SLIDE 0: TITLE ═══ -->
+<div class="slide active" data-slide="0">
+<div class="slide-inner" style="text-align: center;">
+  <div class="label s1">Pitch Presentation · CSC 289 · Group 4</div>
+  <div class="s2">
+<pre style="color: var(--green); font-size: clamp(0.35rem, 0.8vw, 0.55rem); line-height: 1.2; display: inline-block; text-align: left; text-shadow: 0 0 10px var(--green-glow);">
+ ____        _        __  __
+|  _ \  __ _| |_ __ _|  \/  | __ _ _ __
+| | | |/ _` | __/ _` | |\/| |/ _` | '_ \
+| |_| | (_| | || (_| | |  | | (_| | | | |
+|____/ \__,_|\__\__,_|_|  |_|\__,_|_| |_|
+</pre>
+  </div>
+  <p class="body s3" style="max-width: 500px; margin: 0.5em auto;">
+    <span class="a">Adaptive math practice that meets you where you are.</span>
+  </p>
+  <p class="s4" style="font-size: 0.75rem; color: var(--text-dim); margin-top: 2.5em;">
+    Spring 2026 · FTCC<span class="blink"></span>
+  </p>
+</div>
+</div>
+
+<!-- ═══ SLIDE 1: THE PROBLEM ═══ -->
+<div class="slide" data-slide="1">
+<div class="slide-inner">
+  <div class="label s1">The Problem</div>
+  <div class="title-section s2">Math practice has a <span class="o">motivation problem.</span></div>
+  <p class="body s3">
+    It's not that people can't do math. It's that practicing math is almost
+    always <span class="w">boring</span>, <span class="w">stressful</span>, or both.
+  </p>
+  <div class="ascii amber s3">
+  The current options:
+
+  Worksheets           → Boring. Nobody does them voluntarily.
+  Timed tests          → Stressful. Associates math with anxiety.
+  Drill apps           → Boring with better graphics.
+  Gamified apps        → Fun, but the math is an afterthought.
+
+  The result: people avoid practice.
+  The skills they once had get rusty.</div>
+  <p class="body s4">
+    This isn't just a kid problem. Adults lose mental math fluency.
+    Seniors worry about cognitive decline. Everyone benefits from
+    practice — <span class="a">if the practice doesn't feel like punishment.</span>
+  </p>
+</div>
+</div>
+
+<!-- ═══ SLIDE 2: WHY CURRENT SOLUTIONS FAIL ═══ -->
+<div class="slide" data-slide="2">
+<div class="slide-inner">
+  <div class="label s1">The Problem, Continued</div>
+  <div class="title-section s2">The <span class="g">difficulty</span> problem.</div>
+  <p class="body s3">
+    Even when people try to practice, most tools get the difficulty wrong.
+  </p>
+  <div class="two-col s3">
+    <div>
+      <div class="ascii orange" style="font-size: 0.75rem;">
+  TOO EASY:
+
+  "What's 2 + 3?"
+
+  → Bored in 30 seconds
+  → No learning happening
+  → User quits ("this is
+     for little kids")</div>
+    </div>
+    <div>
+      <div class="ascii orange" style="font-size: 0.75rem;">
+  TOO HARD:
+
+  "Solve: 847 ÷ 23"
+
+  → Frustrated immediately
+  → Associates math with failure
+  → User quits ("I'm bad
+     at math")</div>
+    </div>
+  </div>
+  <div class="callout s4">
+    <span class="g">The sweet spot</span> — where you have to <em>think</em> but you <em>can</em>
+    do it — is different for every person. And it shifts as they improve.
+    Most tools don't adjust. <span class="w">DataMan does.</span>
+  </div>
+</div>
+</div>
+
+<!-- ═══ SLIDE 3: TEAM ═══ -->
+<div class="slide" data-slide="3">
+<div class="slide-inner">
+  <div class="label s1">The Team</div>
+  <div class="title-section s2">Group 4 — <span class="g">Online Cohort</span></div>
+  <div class="ascii s3" style="text-align: center;">
+  ┌─────────────────────────────────────────────────────┐
+  │                                                     │
+  │   [Your team introductions go here]                 │
+  │                                                     │
+  │   Each member: name + primary role                  │
+  │                                                     │
+  │   Example roles:                                    │
+  │     • Backend / Game Logic                          │
+  │     • Frontend / Templates                          │
+  │     • Database / Analytics                          │
+  │     • Full-Stack / Integration                      │
+  │                                                     │
+  │   30 seconds. Keep it brief. Move on.               │
+  │                                                     │
+  └─────────────────────────────────────────────────────┘</div>
+  <p class="body s4" style="font-size: 0.82rem; color: var(--text-dim); margin-top: 1em;">
+    (In the video version, your instructor will introduce the team structure.
+    In your final presentation, each team member introduces themselves.)
+  </p>
+</div>
+</div>
+
+<!-- ═══ SLIDE 4: PERSONAS ═══ -->
+<div class="slide" data-slide="4">
+<div class="slide-inner">
+  <div class="label s1">Who We're Building For</div>
+  <div class="title-section s2">Two people. <span class="a">Same problem.</span></div>
+
+  <div class="persona-card green s3">
+    <div class="persona-name">Mia, Age 10</div>
+    <div class="persona-context">5th grader · Reluctant Practicer</div>
+    <div class="persona-quote">
+      "I don't hate math. I hate worksheets."
+    </div>
+    <div class="persona-pain">
+      Mia is average at math — not terrible, not great. Her mom wants her to
+      practice at home, but worksheets turn into a nightly battle. She's tried
+      three math apps. She used each one for about a week before getting bored
+      because the problems were either too easy or too hard. She'd rather be
+      drawing.
+    </div>
+  </div>
+
+  <div class="persona-card amber s4">
+    <div class="persona-name">James, Age 34</div>
+    <div class="persona-context">Project Manager · Coffee Break Sharpener</div>
+    <div class="persona-quote">
+      "I play Wordle every morning. I'd do math puzzles if they took two minutes."
+    </div>
+    <div class="persona-pain">
+      James hasn't done mental math since college. He uses a calculator for
+      everything. He does the NYT crossword on his commute and plays Wordle
+      before his first meeting — he likes short mental challenges that make
+      him feel sharp. But every math app he's tried felt like it was designed
+      for children.
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ SLIDE 5: SOLUTION ═══ -->
+<div class="slide" data-slide="5">
+<div class="slide-inner">
+  <div class="label s1">The Solution</div>
+  <div class="title-section s2">DataMan</div>
+  <p class="body s3">
+    A web-based math challenge platform with <span class="a">four game modes</span>,
+    <span class="a">adaptive difficulty</span>, and a <span class="a">progress dashboard</span>.
+    Sessions take 2-5 minutes. The app gets harder when you're doing well and
+    easier when you're struggling — automatically, invisibly.
+  </p>
+
+  <div class="feature-row s4">
+    <div class="feature-card">
+      <div class="feature-label">Feature 1</div>
+      <div class="feature-name">Four Game Modes</div>
+      <div class="feature-desc">Answer Checker, Number Guesser, Speed Round, Fill It In. Each one exercises a different kind of math thinking. Short sessions, immediate feedback.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-label">Feature 2</div>
+      <div class="feature-name">Adaptive Difficulty</div>
+      <div class="feature-desc">The app tracks your recent accuracy and adjusts automatically. <span class="g">Mia</span> gets grade-appropriate problems. <span class="a">James</span> gets challenged at his level. Same app.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-label">Feature 3</div>
+      <div class="feature-name">Progress Dashboard</div>
+      <div class="feature-desc">Streaks. Trends. Personal bests. The dashboard tells a story: "You're improving." <span class="g">Mia</span> sees her streak. <span class="a">James</span> sees his accuracy trend.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-label">Feature 4</div>
+      <div class="feature-name">Persistent Accounts</div>
+      <div class="feature-desc">Register, log in, pick up where you left off. Your history, your streak, your difficulty tier — all saved. Come back tomorrow and everything's still there.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ SLIDE 6: CONNECTING TO PERSONAS ═══ -->
+<div class="slide" data-slide="6">
+<div class="slide-inner">
+  <div class="label s1">How It Solves the Problem</div>
+  <div class="title-section s2">Same app. <span class="g">Different experience.</span></div>
+  <div class="two-col s3">
+    <div>
+      <div class="title-sub" style="font-size: 0.9rem;">Mia's experience:</div>
+      <div class="ascii" style="font-size: 0.72rem;">
+  Opens DataMan after dinner.
+  Dashboard: "🔥 6-day streak!"
+  Picks Speed Round.
+  60 seconds of multiplication.
+  Gets 16 right — 2 more than yesterday.
+  <span class="a">"New personal best!"</span>
+  Plays one more round.
+  Total time: 4 minutes.
+  Goes back to drawing.
+
+  <span class="g">She practiced voluntarily.</span></div>
+    </div>
+    <div>
+      <div class="title-sub" style="font-size: 0.9rem;">James's experience:</div>
+      <div class="ascii amber" style="font-size: 0.72rem;">
+  Opens DataMan with coffee.
+  Dashboard: "Accuracy ↑12% this month"
+  Picks Answer Checker.
+  15 quick right/wrong decisions.
+  Tier 5 problems — actually challenging.
+  Done in 2 minutes.
+  <span class="a">Closes tab before first meeting.</span>
+
+  He'll do it again tomorrow.
+
+  <span class="a">He practiced voluntarily.</span></div>
+    </div>
+  </div>
+  <p class="body s4" style="margin-top: 0.5em; font-size: 0.85rem;">
+    Both solved the same problem: <span class="w">math practice that doesn't feel like punishment.</span>
+    The adaptive difficulty made it personal. The dashboard made it visible.
+  </p>
+</div>
+</div>
+
+<!-- ═══ SLIDE 7: DEMO WALKTHROUGH ═══ -->
+<div class="slide" data-slide="7">
+<div class="slide-inner">
+  <div class="label s1">What You'll Build</div>
+  <div class="title-section s2">The user journey.</div>
+  <div class="ascii s3" style="font-size: 0.7rem;">
+  ┌─── REGISTER ──────────────────────────────────────────────────────┐
+  │  Username: [mia_draws    ]                                        │
+  │  Email:    [mia@email.com]                                        │
+  │  Password: [••••••••     ]      [ Create Account ]                │
+  └───────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+  ┌─── DASHBOARD ─────────────────────────────────────────────────────┐
+  │  Welcome back, mia_draws!                       🔥 6-day streak   │
+  │                                                                   │
+  │  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────┐ │
+  │  │ Answer       │ │ Number       │ │ Speed        │ │ Fill     │ │
+  │  │ Checker      │ │ Guesser      │ │ Round        │ │ It In    │ │
+  │  │  [ Play ]    │ │  [ Play ]    │ │  [ Play ]    │ │ [ Play ] │ │
+  │  └──────────────┘ └──────────────┘ └──────────────┘ └──────────┘ │
+  │                                                                   │
+  │  Accuracy This Week:  ██████████░░ 78%  (↑ from 65% last week)    │
+  │  Best Mode: Speed Round (85%)   Weakest: Fill It In (62%)         │
+  └───────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+  ┌─── SPEED ROUND ───────────────────────────────────────────────────┐
+  │  ⏱ 0:42                                                          │
+  │                                                                   │
+  │                    6 × 7 = [____]                                 │
+  │                                                                   │
+  │  ✓ ✓ ✗ ✓ ✓ ✓ ✓ ✓ ✗ ✓ ✓ ✓ ✓ ✓                                    │
+  │  Correct: 12    Attempted: 14                                     │
+  └───────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+  ┌─── RESULTS ───────────────────────────────────────────────────────┐
+  │  Speed Round Complete!                                            │
+  │                                                                   │
+  │  Score: 16 / 19          Accuracy: 84%                            │
+  │  🏆 New Personal Best!   (Previous: 14)                           │
+  │  Difficulty: Tier 3 → Tier 4 (nice work!)                         │
+  │                                                                   │
+  │  [ Play Again ]     [ Back to Dashboard ]                         │
+  └───────────────────────────────────────────────────────────────────┘</div>
+</div>
+</div>
+
+<!-- ═══ SLIDE 8: ARCHITECTURE ═══ -->
+<div class="slide" data-slide="8">
+<div class="slide-inner">
+  <div class="label s1">Technical Architecture</div>
+  <div class="title-section s2">How it works <span class="g">under the hood.</span></div>
+
+  <div class="ascii cyan s3" style="font-size: 0.72rem;">
+  ┌─────────────────────────────────────────────────────────────────┐
+  │                     DATA FLOW                                   │
+  │                                                                 │
+  │   ┌──────────┐         ┌──────────────┐         ┌──────────┐   │
+  │   │ BROWSER  │  HTTP   │    FLASK     │  SQL    │ DATABASE │   │
+  │   │          │ ──────→ │              │ ──────→ │          │   │
+  │   │ HTML/CSS │         │  Python      │         │ SQLite   │   │
+  │   │ JS Timer │ ←────── │  Jinja2      │ ←────── │ (→Postgres│   │
+  │   │          │  HTML   │  SQLAlchemy  │  Data   │  Sprint 3)│   │
+  │   └──────────┘         └──────────────┘         └──────────┘   │
+  │                              │                                  │
+  │                    ┌─────────┴─────────┐                        │
+  │                    │   GAME ENGINE     │                        │
+  │                    │                   │                        │
+  │                    │ Question Generator│                        │
+  │                    │ Difficulty Adapter│                        │
+  │                    │ Streak Tracker    │                        │
+  │                    │ Stats Aggregator  │                        │
+  │                    └───────────────────┘                        │
+  └─────────────────────────────────────────────────────────────────┘
+
+  Tech Stack:  Flask · SQLAlchemy · Jinja2 · SQLite → PostgreSQL
+  Dev Env:     GitHub Codespaces
+  Deployment:  Render (Sprint 3)</div>
+
+  <p class="body s4" style="font-size: 0.85rem; margin-top: 0.5em;">
+    <span class="w">Why Flask?</span> The team knows Python from CTS 285. Flask is
+    lightweight and well-documented. <span class="w">Why SQLite first?</span> Zero config —
+    it's a file on disk. We migrate to PostgreSQL when we deploy to Render,
+    and SQLAlchemy makes that migration a config change, not a rewrite.
+  </p>
+</div>
+</div>
+
+<!-- ═══ SLIDE 9: DATABASE SCHEMA ═══ -->
+<div class="slide" data-slide="9">
+<div class="slide-inner">
+  <div class="label s1">Database Schema</div>
+  <div class="title-section s2">Five tables. <span class="a">Five questions answered.</span></div>
+
+  <div class="ascii s3" style="font-size: 0.72rem;">
+  ┌──────────┐
+  │  <span class="g">users</span>   │ ─── "Who is this person?"
+  │──────────│
+  │ id       │──┐
+  │ username │  │
+  │ email    │  │    ┌───────────┐
+  │ password │  ├──→ │ <span class="a">sessions</span>  │ ─── "What happened this game?"
+  │ streak   │  │    │───────────│
+  └──────────┘  │    │ id        │──┐
+                │    │ user_id   │  │    ┌────────────┐
+                │    │ mode      │  └──→ │ <span class="c">responses</span>  │ ─── "Each individual answer"
+                │    │ accuracy  │       │────────────│
+                │    │ tier      │       │ session_id │
+                │    └───────────┘       │ question   │
+                │                        │ is_correct │
+                │    ┌───────────┐       │ time_ms    │
+                ├──→ │ <span class="a">user_tiers</span>│       └────────────┘
+                │    │───────────│
+                │    │ user_id   │ ─── "How hard for this user in this mode?"
+                │    │ mode      │
+                │    │ tier (1-8)│
+                │    └───────────┘
+                │
+                │    ┌────────────┐
+                └──→ │ <span class="a">daily_stats</span>│ ─── "How did they do today? This week?"
+                     │────────────│
+                     │ user_id    │
+                     │ date       │
+                     │ accuracy   │
+                     └────────────┘</div>
+
+  <p class="body s4" style="font-size: 0.82rem;">
+    Each table answers one question. The <span class="g">users</span> table handles auth.
+    The <span class="a">sessions</span> and <span class="c">responses</span> tables record game history. The
+    <span class="a">user_tiers</span> table drives adaptive difficulty. The <span class="a">daily_stats</span>
+    table powers the dashboard trend chart.
+  </p>
+</div>
+</div>
+
+<!-- ═══ SLIDE 10: NEXT STEPS ═══ -->
+<div class="slide" data-slide="10">
+<div class="slide-inner">
+  <div class="label s1">Roadmap</div>
+  <div class="title-section s2">Three sprints. <span class="g">What's coming.</span></div>
+
+  <div class="ascii s3" style="font-size: 0.75rem;">
+  SPRINT 1 (Weeks 1-2): <span class="g">"Make it work once"</span>
+  ├── User registration + login + logout
+  ├── Answer Checker mode (15 questions, score saved)
+  ├── Basic dashboard (play button, last score)
+  └── Running in Codespace
+
+  SPRINT 2 (Weeks 3-4): <span class="a">"Make it smart"</span>
+  ├── Number Guesser + Speed Round modes
+  ├── <span class="w">Adaptive difficulty engine</span> (the key feature)
+  ├── Streak tracking
+  ├── 7-day accuracy trend on dashboard
+  └── Known challenge: client-side timer for Speed Round
+
+  SPRINT 3 (Weeks 5-6): <span class="o">"Make it real"</span>
+  ├── Fill It In mode
+  ├── Polished dashboard (all 4 modes, trends, personal bests)
+  ├── Deploy to Render (SQLite → PostgreSQL migration)
+  ├── Responsive design (works on phone/tablet)
+  └── Demo prep + portfolio documentation</div>
+
+  <div class="callout s4">
+    <span class="g">Known technical challenges:</span> Client-side timer synchronization
+    for Speed Round. SQLite → PostgreSQL migration in Sprint 3.
+    Adaptive difficulty tuning (thresholds may need adjustment based on testing).
+  </div>
+</div>
+</div>
+
+<!-- ═══ SLIDE 11: CLOSE ═══ -->
+<div class="slide" data-slide="11">
+<div class="slide-inner" style="text-align: center;">
+  <div class="label s1">End of Pitch</div>
+  <div class="s2">
+<pre style="color: var(--green); font-size: clamp(0.5rem, 1.1vw, 0.8rem); line-height: 1.4; display: inline-block; text-align: left; text-shadow: 0 0 10px var(--green-glow);">
+  ╔═════════════════════════════════════════╗
+  ║                                         ║
+  ║   Math practice that                    ║
+  ║   meets you where you are.              ║
+  ║                                         ║
+  ║   <span class="a">Adaptive. Persistent. Visible.</span>        ║
+  ║                                         ║
+  ╚═════════════════════════════════════════╝
+</pre>
+  </div>
+  <p class="body s3" style="max-width: 500px; margin: 1em auto; text-align: center; font-size: 0.88rem;">
+    <span class="g">Mia</span> practices voluntarily because it feels like a game.<br>
+    <span class="a">James</span> practices daily because it takes two minutes.<br>
+    The app remembers, adapts, and shows them they're improving.
+  </p>
+  <p class="s4" style="font-size: 0.75rem; color: var(--text-dim); margin-top: 2em;">
+    Questions?
+  </p>
+  <p class="s5" style="font-size: 0.65rem; color: var(--text-dim); margin-top: 2em;">
+    CSC 289 · Group 4 · Spring 2026 · Wake Tech Community College
+  </p>
+</div>
+</div>
+
+</div>
+
+<div class="bottom-bar">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>← Prev</button>
+  <span class="slide-counter" id="slideCounter">1 / 12</span>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+function showSlide(n) {
+  slides.forEach(s => s.classList.remove('active'));
+  slides[n].classList.add('active');
+  currentSlide = n;
+  document.getElementById('prevBtn').disabled = (n === 0);
+  document.getElementById('nextBtn').disabled = (n === totalSlides - 1);
+  document.getElementById('slideCounter').textContent = `${n + 1} / ${totalSlides}`;
+  document.getElementById('progressFill').style.width = `${((n + 1) / totalSlides) * 100}%`;
+}
+function changeSlide(dir) {
+  const next = currentSlide + dir;
+  if (next >= 0 && next < totalSlides) showSlide(next);
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+});
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+});
+showSlide(0);
+</script>
+</body>
+</html>

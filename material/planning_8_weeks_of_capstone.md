@@ -64,6 +64,11 @@ includes invites and collab settings, so you have repositories everyone can work
 Once you create a Project in your organization, you'll be able to use that as "The Big Board"
 where you can view all your issues and their status.
 
+Create a new project, name it something better than "@username's untitled project", and select the Kanban style. 
+
+Now, when you make an issue, you can select which project it's associated with, so that it shows up on the "Big Board". 
+
+
 
 
 
